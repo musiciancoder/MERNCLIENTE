@@ -13,6 +13,7 @@ const Login = () => {
 
     const {email,password} = usuario;
 
+    //fn se ejecuta al escribir en el input (probar en RDT)
     const onChange = (e) => { //al escribir en los inputs...
             guardarUsuario({ //...cambia el estado del usuario
                 ...usuario,
