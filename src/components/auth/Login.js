@@ -1,10 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Link} from "react-router-dom";
 
 const Login = () => {
 
+    //state para iniciar sesion
+    const [usuario, guardarUsuario] = useState ({
+        email:'',
+        password: ''
+    });
 
-    const onChange = () => {
+    //extraer de usuario
 
+    const {email,password} = usuario;
+
+    const onChange = (e) => { //al escribir en los inputs...
+            guardarUsuario({ //...cambia el estado del usuario
+                ...usuario,
+                [e.target.name]: e.target.value
+            })
+    }
+
+    //Cuando el usuario quiere iniciar sesion
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        //Validar que no haya campos vacios
+
+
+        //Pasarlo al action
     }
 
     return (
@@ -15,7 +38,7 @@ const Login = () => {
 
 
                 <form
-                    ///onSubmit={onSubmit}
+                    onSubmit={onSubmit}
                 >
                     <div className="campo-form">
                         <label htmlFor="email">Email</label>
@@ -24,7 +47,7 @@ const Login = () => {
                             id="email"
                             name="email"
                             placeholder="Tu Email"
-                            //value={email}
+                            value={email}
                             onChange={onChange}
                         />
                     </div>
@@ -36,7 +59,7 @@ const Login = () => {
                             id="password"
                             name="password"
                             placeholder="Tu Password"
-                            //     value={password}
+                            value={password}
                             onChange={onChange}
                         />
                     </div>
@@ -45,6 +68,9 @@ const Login = () => {
                         <input type="submit" className="btn btn-primario btn-block" value="Iniciar Sesión"/>
                     </div>
                 </form>
+
+                <Link to={'/nueva-cuenta'} className="enlace-cuenta">Obtener cuenta</Link>
+
             </div>
         </div>
     );
