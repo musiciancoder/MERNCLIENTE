@@ -8,6 +8,7 @@ import ProyectoState from "./context/proyectos/proyectoState";
 //Proyecto iniciado con react-router-dom
 function App() {
   return (
+      //Esto equivale al <NombreProvider> del context normal
       <ProyectoState>
    <Router>
 
