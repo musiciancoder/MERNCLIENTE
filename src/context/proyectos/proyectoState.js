@@ -3,13 +3,13 @@ import React, {useReducer} from "react";
 import proyectoContext from "./proyectoContext";
 import proyectoReducer from "./proyectoReducer";
 
-const proyectoState = props =>{
+const ProyectoState = props =>{
     const initialState ={
         formulario: false
     }
 
     //Dispatch para ejecutar las acciones
-    const [state, distch] = useReducer(proyectoReducer,initialState );
+    const [state, dispatch] = useReducer(proyectoReducer,initialState );
 
     //serie de funciones CRUD
 
@@ -24,3 +24,5 @@ const proyectoState = props =>{
     )
 
 }
+
+export default ProyectoState;

@@ -3,10 +3,12 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Login from "./components/auth/Login";
 import NuevaCuenta from "./components/auth/NuevaCuenta";
 import Proyectos from "./components/proyectos/Proyectos";
+import ProyectoState from "./context/proyectos/proyectoState";
 
 //Proyecto iniciado con react-router-dom
 function App() {
   return (
+      <ProyectoState>
    <Router>
 
      <Switch>
@@ -18,6 +20,7 @@ function App() {
      </Switch>
 
    </Router>
+      </ProyectoState>
   );
 }
 
