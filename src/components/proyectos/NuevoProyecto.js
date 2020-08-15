@@ -8,24 +8,23 @@ const NuevoProyecto = () => {
     //Obtener el state del formulario por medio de Context (el estado de formulario se encuentra en proyectoState)
     const proyectosContext = useContext(ProyectoContext);
     //destructuring formulario y funcion mostrarformulario (fn tipo "Action" de refux, ya que contiene type). La idea es q el formulario se muestre en pantalla solo si esta como true
-    const {formulario, mostrarFormulario} = proyectosContext;
+    const {formulario, mostrarFormulario, agregarProyecto} = proyectosContext;
 
 
     //State para proyecto
-    const [proyecto, guardarProyecto] = useState ({
-        nombre: ''
+    const [proyecto, guardarProyecto] = useState({
+        nombre: '' //inicialmente solo tiene atributo nombre
     });
 
     //Extraer nombre de proyecto
     const {nombre} = proyecto;
 
 
-
     //fn se ejecuta al escribir en el input (probar en RDT)
     const onChangeProyecto = (e) => {
         guardarProyecto({ //cambio de estado para proyecto
             ...proyecto,
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         })
     }
 
@@ -34,30 +33,37 @@ const NuevoProyecto = () => {
         e.preventDefault();
 
         //Validar el proyecto
-
+        if (nombre === '') {
+            return;
+        }
         //Agregar el state
+        agregarProyecto(proyecto);
 
-        //Reiniciar el formulario
+        //Resetear el formulario
+        guardarProyecto({
+            nombre: ''
+        })
 
         //Mostrar el formulario
         //TODO analizar este error en video 202. Agregando la función para mostrar el Formulario
-     /*   const onClickFormulario =()=>{
-            mostrarFormulario(); //fn tipo "action" de REDUX que retora true o false
-        }*/
+        /*   const onClickFormulario =()=>{
+               mostrarFormulario(); //fn tipo "action" de REDUX que retora true o false
+           }*/
 
     }
 
-    return(
+    return (
         <Fragment>
-        <button
-        type="button"
-        className="btn btn-block btn-primario"
-        onClick={()=>mostrarFormulario()}
-        >NuevoProyecto</button>
+            <button
+                type="button"
+                className="btn btn-block btn-primario"
+                onClick={() => mostrarFormulario()}
+            >NuevoProyecto
+            </button>
 
             {
                 formulario
-                ?
+                    ?
                     (
                         <form
                             className="formulario-nuevo-proyecto"

@@ -2,10 +2,10 @@
 
 
 import React, {useReducer} from "react";
-
+import {v4 as uuid} from "uuid";
 import proyectoContext from "./proyectoContext";
 import proyectoReducer from "./proyectoReducer";
-import {FORMULARIO_PROYECTO, OBTENER_PROYECTOS} from '../../types';
+import {AGREGAR_PROYECTO, FORMULARIO_PROYECTO, OBTENER_PROYECTOS} from '../../types';
 
 const ProyectoState = props =>{
 
@@ -43,6 +43,19 @@ const ProyectoState = props =>{
         })
     }
 
+    //Agregar nuevo proyecto
+    const agregarProyecto  = (proyecto) => { //fn llamada en NuevoProyecto, al hacer click en submit
+
+        // Asignarle un id
+        proyecto.id = uuid();
+
+        //Insertar projecto en el state
+        dispatch({
+            type: AGREGAR_PROYECTO,
+            payload: proyecto
+        })
+
+    }
 
     return(
         <proyectoContext.Provider  //Este es el provider, que en context normal va en el archivo NombreContext, es decir acá iría en el archivo proyectoContext,
@@ -51,7 +64,8 @@ const ProyectoState = props =>{
             proyectos: state.proyectos,
             formulario:state.formulario, //valor que pasamos para que este disponible
             mostrarFormulario,
-            obtenerProyectos
+            obtenerProyectos,
+            agregarProyecto
         }}
         >
             {props.children}
