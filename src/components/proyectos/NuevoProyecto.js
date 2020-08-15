@@ -7,8 +7,8 @@ const NuevoProyecto = () => {
 
     //Obtener el state del formulario por medio de Context (el estado de formulario se encuentra en proyectoState)
     const proyectosContext = useContext(ProyectoContext);
-    //destructuring formulario. La idea es q el formulario se muestre en pantalla solo si esta como true
-    const {formulario} = proyectosContext;
+    //destructuring formulario y funcion mostrarformulario (fn tipo "Action" de refux, ya que contiene type). La idea es q el formulario se muestre en pantalla solo si esta como true
+    const {formulario, mostrarFormulario} = proyectosContext;
 
 
     //State para proyecto
@@ -39,6 +39,12 @@ const NuevoProyecto = () => {
 
         //Reiniciar el formulario
 
+        //Mostrar el formulario
+        //TODO analizar este error en video 202. Agregando la función para mostrar el Formulario
+     /*   const onClickFormulario =()=>{
+            mostrarFormulario(); //fn tipo "action" de REDUX que retora true o false
+        }*/
+
     }
 
     return(
@@ -46,6 +52,7 @@ const NuevoProyecto = () => {
         <button
         type="button"
         className="btn btn-block btn-primario"
+        onClick={()=>mostrarFormulario()}
         >NuevoProyecto</button>
 
             {

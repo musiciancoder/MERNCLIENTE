@@ -5,6 +5,7 @@ import React, {useReducer} from "react";
 
 import proyectoContext from "./proyectoContext";
 import proyectoReducer from "./proyectoReducer";
+import {FORMULARIO_PROYECTO} from '../../types';
 
 const ProyectoState = props =>{
     //Estado inicial (con Redux normal va en el reducer)
@@ -17,12 +18,19 @@ const ProyectoState = props =>{
     const [state, dispatch] = useReducer(proyectoReducer,initialState );
 
     //serie de funciones CRUD
+    const mostrarFormulario = () =>{  //esta fn se pasa mas abajo en el provider paa que esté disponible
+        dispatch({ //se despacha al reducer (proyectoReducer)
+            type: FORMULARIO_PROYECTO
+            //TODO dijo que se podia poner un payload
+        })
+    }
 
     return(
         <proyectoContext.Provider  //Este es el provider, que en context normal va en el archivo NombreContext, es decir acá iría en el archivo proyectoContext,
             //pero como estamos usando useReducer va en el State
         value={{
-            formulario:state.formulario //valor que pasamos para que este disponible
+            formulario:state.formulario, //valor que pasamos para que este disponible
+            mostrarFormulario
         }}
         >
             {props.children}
