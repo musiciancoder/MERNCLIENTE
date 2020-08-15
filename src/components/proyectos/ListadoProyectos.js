@@ -11,7 +11,19 @@ const ListadoProyectos = () => {
 
     //Obtener proyectos cuando carga el componente
     useEffect ( () => {
-        obtenerProyectos();
+        obtenerProyectos(); //funcion tipo actions definida en el state
+        //el uso es el mismo que en REDUX, solo que no se usa la sintaxis con Dispatch
+
+        //en Redux seria:
+        /*useEffect( ()=> {
+
+            // Consultar la api
+            const cargarProyectos = () => dispatch( obtenerProyectos() );
+            cargarProyectos();
+            // eslint-disable-next-line
+        }, []);*/
+
+
     },[] );
 
     //Revisar si proyectos tiene contenido

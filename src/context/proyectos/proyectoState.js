@@ -26,7 +26,8 @@ const ProyectoState = props =>{
     //Dispatch para enviar las acciones al reducer (proyectoReducer en nuestro caso).
     const [state, dispatch] = useReducer(proyectoReducer,initialState );
 
-    //serie de funciones CRUD
+    //Serie de funciones CRUD. Estas funciones son los actions, que en REDUX van el el archivo actions.js (tambien llamado dispatch.js)
+
     const mostrarFormulario = () =>{  //esta fn se pasa mas abajo en el provider paa que esté disponible
         dispatch({ //se despacha al reducer (proyectoReducer)
             type: FORMULARIO_PROYECTO
