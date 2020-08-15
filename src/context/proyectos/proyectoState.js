@@ -8,8 +8,17 @@ import proyectoReducer from "./proyectoReducer";
 import {FORMULARIO_PROYECTO} from '../../types';
 
 const ProyectoState = props =>{
+
+
+
     //Estado inicial (con Redux normal va en el reducer)
     const initialState ={
+        proyectos: [
+            {id:1, nombre: 'Tienda virtual'},
+            {id:2, nombre: 'Intranet'},
+            {id:3,nombre: 'Diseño de sitios'},
+            {id:4,nombre: 'MERN'}
+        ],
         formulario: false
     }
 
@@ -29,6 +38,7 @@ const ProyectoState = props =>{
         <proyectoContext.Provider  //Este es el provider, que en context normal va en el archivo NombreContext, es decir acá iría en el archivo proyectoContext,
             //pero como estamos usando useReducer va en el State
         value={{
+            proyectos: state.proyectos,
             formulario:state.formulario, //valor que pasamos para que este disponible
             mostrarFormulario
         }}
