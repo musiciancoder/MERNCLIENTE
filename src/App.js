@@ -4,12 +4,14 @@ import Login from "./components/auth/Login";
 import NuevaCuenta from "./components/auth/NuevaCuenta";
 import Proyectos from "./components/proyectos/Proyectos";
 import ProyectoState from "./context/proyectos/proyectoState";
+import TareaState from "./context/tareas/tareaState";
 
 //Proyecto iniciado con react-router-dom
 function App() {
   return (
       //Esto equivale al <NombreProvider> del context normal
       <ProyectoState>
+          <TareaState>
    <Router>
 
      <Switch>
@@ -21,6 +23,7 @@ function App() {
      </Switch>
 
    </Router>
+          </TareaState>
       </ProyectoState>
   );
 }
