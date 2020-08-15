@@ -5,20 +5,20 @@ import React, {useReducer} from "react";
 
 import proyectoContext from "./proyectoContext";
 import proyectoReducer from "./proyectoReducer";
-import {FORMULARIO_PROYECTO} from '../../types';
+import {FORMULARIO_PROYECTO, OBTENER_PROYECTOS} from '../../types';
 
 const ProyectoState = props =>{
 
-
+    const proyectos =  [
+        {id:1, nombre: 'Tienda virtual'},
+        {id:2, nombre: 'Intranet'},
+        {id:3,nombre: 'Diseño de sitios'},
+        {id:4,nombre: 'MERN'}
+    ]
 
     //Estado inicial (con Redux normal va en el reducer)
     const initialState ={
-        proyectos: [
-            {id:1, nombre: 'Tienda virtual'},
-            {id:2, nombre: 'Intranet'},
-            {id:3,nombre: 'Diseño de sitios'},
-            {id:4,nombre: 'MERN'}
-        ],
+        proyectos: [] ,
         formulario: false
     }
 
@@ -30,9 +30,18 @@ const ProyectoState = props =>{
     const mostrarFormulario = () =>{  //esta fn se pasa mas abajo en el provider paa que esté disponible
         dispatch({ //se despacha al reducer (proyectoReducer)
             type: FORMULARIO_PROYECTO
-            //TODO dijo que se podia poner un payload
+
         })
     }
+
+    //obtener los proyectos
+    const obtenerProyectos = () => {
+        dispatch({
+            type: OBTENER_PROYECTOS,
+            payload: proyectos
+        })
+    }
+
 
     return(
         <proyectoContext.Provider  //Este es el provider, que en context normal va en el archivo NombreContext, es decir acá iría en el archivo proyectoContext,
@@ -40,7 +49,8 @@ const ProyectoState = props =>{
         value={{
             proyectos: state.proyectos,
             formulario:state.formulario, //valor que pasamos para que este disponible
-            mostrarFormulario
+            mostrarFormulario,
+            obtenerProyectos
         }}
         >
             {props.children}
