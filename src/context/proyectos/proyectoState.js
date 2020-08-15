@@ -5,7 +5,8 @@ import React, {useReducer} from "react";
 import {v4 as uuid} from "uuid";
 import proyectoContext from "./proyectoContext";
 import proyectoReducer from "./proyectoReducer";
-import {AGREGAR_PROYECTO, FORMULARIO_PROYECTO, OBTENER_PROYECTOS} from '../../types';
+import {AGREGAR_PROYECTO, FORMULARIO_PROYECTO, OBTENER_PROYECTOS,
+VALIDAR_FORMULARIO} from '../../types';
 
 const ProyectoState = props =>{
 
@@ -19,7 +20,8 @@ const ProyectoState = props =>{
     //Estado inicial (con Redux normal va en el reducer)
     const initialState ={
         proyectos: [] ,
-        formulario: false
+        formulario: false,
+        errorformulario: false
     }
 
     //useReducer provoca que el estado sea manejado como una mezcla entre Context y Redux
@@ -57,15 +59,25 @@ const ProyectoState = props =>{
 
     }
 
+    //Validar el formulario por errores
+
+    const mostrarError = () => {
+        dispatch({
+            type:VALIDAR_FORMULARIO
+        })
+    }
+
     return(
         <proyectoContext.Provider  //Este es el provider, que en context normal va en el archivo NombreContext, es decir acá iría en el archivo proyectoContext,
             //pero como estamos usando useReducer va en el State
         value={{
             proyectos: state.proyectos,
             formulario:state.formulario, //valor que pasamos para que este disponible
+            errorformulario: state.errorformulario,
             mostrarFormulario,
             obtenerProyectos,
-            agregarProyecto
+            agregarProyecto,
+            mostrarError
         }}
         >
             {props.children}

@@ -8,7 +8,7 @@ const NuevoProyecto = () => {
     //Obtener el state del formulario por medio de Context (el estado de formulario se encuentra en proyectoState)
     const proyectosContext = useContext(ProyectoContext);
     //destructuring formulario y funcion mostrarformulario (fn tipo "Action" de refux, ya que contiene type). La idea es q el formulario se muestre en pantalla solo si esta como true
-    const {formulario, mostrarFormulario, agregarProyecto} = proyectosContext;
+    const {formulario, errorformulario, mostrarFormulario, agregarProyecto, mostrarError} = proyectosContext;
 
 
     //State para proyecto
@@ -34,6 +34,7 @@ const NuevoProyecto = () => {
 
         //Validar el proyecto
         if (nombre === '') {
+            mostrarError(); //fn tipo action
             return;
         }
         //Agregar el state
@@ -86,9 +87,8 @@ const NuevoProyecto = () => {
 
                         </form>
 
-                    ) : null
-            }
-
+                    ) : null}
+            {errorformulario ? <p classname="error">El nombre del proyecto es obligatorio</p>: null}
         </Fragment>
     );
 }
