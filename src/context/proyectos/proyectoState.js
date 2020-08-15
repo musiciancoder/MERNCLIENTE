@@ -85,7 +85,7 @@ const ProyectoState = props => {
                 proyectos: state.proyectos,
                 formulario: state.formulario, //valor que pasamos para que este disponible
                 errorformulario: state.errorformulario,
-                proyecto: state.proyecto,
+                proyecto: state.proyecto, //array de proyecto (en rigor solo tiene uno, el proyectoActual que es el q selecciona el usuario. Esto lo diictó el return del reducer)
                 mostrarFormulario,
                 obtenerProyectos,
                 agregarProyecto,
