@@ -4,16 +4,34 @@ import TareaReducer from './tareaReducer';
 
 const  TareaState= (props) => {
 
-    //Estado inicial para tareas
+    //Estado inicial para tareas. Aunque se declaran e inicializan en el State, se ven en RDT en el reducer
     const initialState = {
-        tareas: [],
+        tareas: [
+            {nombre: 'Elegir plataforma', estado: true, proyectoId: 1},
+            {nombre: 'Elegir colores', estado: false, proyectoId: 2},
+            {nombre: 'Elegir plataforma de pago', estado: false, proyectoId: 3},
+            {nombre: 'Elegir hosting', estado: true, proyectoId: 4},
+            {nombre: 'Elegir plataforma', estado: true, proyectoId: 1},
+            {nombre: 'Elegir colores', estado: false, proyectoId: 2},
+            {nombre: 'Elegir plataforma de pago', estado: false, proyectoId: 3},
+            {nombre: 'Elegir plataforma', estado: true, proyectoId: 4},
+            {nombre: 'Elegir colores', estado: false, proyectoId: 1},
+            {nombre: 'Elegir plataforma de pago', estado: false, proyectoId: 2},
+            {nombre: 'Elegir plataforma', estado: true, proyectoId: 3},
+            {nombre: 'Elegir colores', estado: false, proyectoId: 4},
+            {nombre: 'Elegir plataforma de pago', estado: false, proyectoId: 3},
+        ],
     }
 
     //Crear dispatch y state
     const [state,dispatch] = useReducer(TareaReducer, initialState); //se le pasa el reducer y el estado inicial
     
     return (
-        <TareaContext.Provider>
+        <TareaContext.Provider
+        value={{
+            tareas: state.tareas
+        }}
+        >
             {props.children}
         </TareaContext.Provider>
     )
