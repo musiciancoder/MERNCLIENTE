@@ -7,7 +7,7 @@ import proyectoContext from "./proyectoContext";
 import proyectoReducer from "./proyectoReducer";
 import {
     AGREGAR_PROYECTO, FORMULARIO_PROYECTO, OBTENER_PROYECTOS,
-    VALIDAR_FORMULARIO, PROYECTO_ACTUAL
+    VALIDAR_FORMULARIO, PROYECTO_ACTUAL, ELIMINAR_PROYECTO
 } from '../../types';
 
 const ProyectoState = props => {
@@ -78,6 +78,15 @@ const ProyectoState = props => {
         })
     }
 
+    // Elimina un proyecto
+
+       const eliminarProyecto = (proyectoId) => {
+               dispatch({
+                   type: ELIMINAR_PROYECTO ,
+                   payload: proyectoId
+               })
+           }
+
     return (
         <proyectoContext.Provider  //Este es el provider, que en context normal va en el archivo NombreContext, es decir acá iría en el archivo proyectoContext,
             //pero como estamos usando useReducer va en el State
@@ -90,7 +99,8 @@ const ProyectoState = props => {
                 obtenerProyectos,
                 agregarProyecto,
                 mostrarError,
-                proyectoActual
+                proyectoActual,
+                eliminarProyecto
             }}
         >
             {props.children}

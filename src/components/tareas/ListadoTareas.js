@@ -9,13 +9,13 @@ const ListadoTareas = () => {
 //Obtener el state de proyectos por medio de Context (el estado de formulario se encuentra en proyectoState)
 const proyectosContext = useContext(ProyectoContext);
 //destructuring (fn tipo "Action" de refux, ya que contiene type).
-const {proyecto} = proyectosContext;
+const {proyecto, eliminarProyecto} = proyectosContext;
 
 //Si no hay proyecto seleccionado
 if (!proyecto) return <h2>Selecciona un proyecto</h2>;
 
 
-//Array sedtructuring para extraer el proyecto actual ( el proyecto que clickamos )
+//Array destructuring para extraer el proyecto actual ( el proyecto que clickamos )
 const [proyectoActual] = proyecto;
 
 const tareasProyecto = [
@@ -23,7 +23,12 @@ const tareasProyecto = [
     {nombre: 'Elegir colores', estado: false},
     {nombre: 'Elegir plataforma de pago', estado: false},
     {nombre: 'Elegir hosting', estado: true}
-]
+];
+
+//Elimina un proyecto
+    const  onClickEliminar= () => { //se ejecuta al hacer click en boton eliminar
+        eliminarProyecto(proyectoActual.id); // proyectoActual es el proyecto que clickamos
+    }
 
 
     return (
@@ -41,6 +46,7 @@ const tareasProyecto = [
                 <button
                     type="button"
                     className="btn btn-eliminar"
+                    onClick={onClickEliminar}
                 >Eliminar Proyecto
                 </button>
 
