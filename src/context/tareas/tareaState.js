@@ -42,10 +42,10 @@ const  TareaState = (props) => {
 
     return (
         <TareaContext.Provider
-       /*     value={{
-                tareas: state.tareas
+           value={{
+                tareas: state.tareas  //se disponibilizan las tareas a los componentes. Esto se puede ver en RDT en el reducer de TareaState
             }}
-        */>
+        >
             {props.children}
         </TareaContext.Provider>
     )
