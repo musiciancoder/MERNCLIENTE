@@ -1,9 +1,12 @@
 import React, {useReducer} from "react";
 import TareaContext from "./tareaContext";
 import TareaReducer from './tareaReducer';
-import {TAREAS_PROYECTO} from "../../types";
+import {
+    TAREAS_PROYECTO,
 
-const  TareaState = (props) => {
+} from "../../types";
+
+const TareaState = (props) => {
 
     //Estado inicial para tareas. Aunque se declaran e inicializan en el State, se ven en RDT en el reducer
     const initialState = {
@@ -22,16 +25,18 @@ const  TareaState = (props) => {
             {nombre: 'Elegir colores', estado: false, proyectoId: 4},
             {nombre: 'Elegir plataforma de pago', estado: false, proyectoId: 3},
         ],
+
+        tareasproyecto:null //estado para mostrar las tareas correspondiente a cada proyecto cuando clickamos en cada proyecto
     }
 
     //Crear dispatch y state
-    const [state,dispatch] = useReducer(TareaReducer, initialState); //se le pasa el reducer y el estado inicial
+    const [state, dispatch] = useReducer(TareaReducer, initialState); //se le pasa el reducer y el estado inicial
 
     //Crear las fx
 
 
-    //Obtener las tareas de un proyecto
-    const  obtenerTareas= (proyectoId) => {
+    //Obtener las tareas de un proyecto al hacer click en el proyecto
+    const obtenerTareas = (proyectoId) => {
         dispatch({
             type: TAREAS_PROYECTO,
             payload: proyectoId
@@ -39,11 +44,13 @@ const  TareaState = (props) => {
     }
 
 
-
     return (
         <TareaContext.Provider
-           value={{
-                tareas: state.tareas  //se disponibilizan las tareas a los componentes. Esto se puede ver en RDT en el reducer de TareaState
+            value={{
+                tareas: state.tareas,  //se disponibilizan las tareas a los componentes. Esto se puede ver en RDT en el reducer de TareaState
+                tareasproyecto: state.tareasproyecto,
+                obtenerTareas //se ocupa en Proyecto.js
+
             }}
         >
             {props.children}

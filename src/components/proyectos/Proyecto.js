@@ -1,5 +1,7 @@
 import React, {useContext} from 'react';
 import ProyectoContext from '../../context/proyectos/proyectoContext';
+import TareaContext from "../../context/tareas/tareaContext";
+
 
 const Proyecto = ({proyecto}) => {
 
@@ -8,14 +10,23 @@ const Proyecto = ({proyecto}) => {
     //destructuring (fn tipo "Action" de refux, ya que contiene type).
     const {proyectoActual} = proyectosContext;
 
+    //Obtener la funcion del context de tarea
+    const tareasContext = useContext(TareaContext);
+    const {obtenerTareas} = tareasContext;
 
-    return(
+    //fn para agregar el proyecto actual
+    const seleccionarProyecto = (id) => {
+        proyectoActual(id); //Se ejecuta la fn proyectoActual q selecciona el proyecto q el usuario clicka
+        obtenerTareas(id);//Filtrar las tareas cuando se dé click
+    }
+
+    return (
         <li>
             <button
                 type="button"
                 className="btn btn-blank"
                 //para seleccionar por id el proyecto que clickamos
-            onClick={()=>proyectoActual(proyecto.id)}
+                onClick={() => seleccionarProyecto(proyecto.id)}
             >
                 {proyecto.nombre}
             </button>
