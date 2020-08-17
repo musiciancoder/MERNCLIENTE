@@ -3,7 +3,7 @@ import TareaContext from "./tareaContext";
 import TareaReducer from './tareaReducer';
 import {
     TAREAS_PROYECTO,
-
+AGREGAR_TAREA,
 } from "../../types";
 
 const TareaState = (props) => {
@@ -43,13 +43,20 @@ const TareaState = (props) => {
         })
     }
 
+    //Agregar una tarea al proyecto seleccionado
+    const  agregarTarea= (tarea) => {
+        type:AGREGAR_TAREA
+            payload: tarea
+    }
+
 
     return (
         <TareaContext.Provider
             value={{
                 tareas: state.tareas,  //se disponibilizan las tareas a los componentes. Esto se puede ver en RDT en el reducer de TareaState
                 tareasproyecto: state.tareasproyecto,
-                obtenerTareas //se ocupa en Proyecto.js
+                obtenerTareas, //se ocupa en Proyecto.js
+                agregarTarea //
 
             }}
         >
