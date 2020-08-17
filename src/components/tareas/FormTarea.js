@@ -12,7 +12,7 @@ const FormTarea = () => {
     //Obtener el state por medio de context
     const tareasContext = useContext(TareaContext);
     //destructuring (fn tipo "Action" de refux, ya que contiene type).
-    const {agregarTarea} = tareasContext;
+    const {errortarea, agregarTarea, validarTarea, obtenerTareas} = tareasContext;
 
     //State del formulario para crear tarea
     const [tarea, guardarTarea] = useState({
@@ -41,6 +41,10 @@ const FormTarea = () => {
         e.preventDefault();
 
         //validar
+        if (nombre.trim()===''){
+            validarTarea();
+            return;
+        }
 
         //pasar la validacion
 
@@ -50,7 +54,13 @@ const FormTarea = () => {
         tarea.estado = false;//tb se agrega como atributo
         agregarTarea(tarea);
 
-        //agregar el form
+        //Obtener y filtrar las tareas del proyecto actual
+        obtenerTareas(proyectoActual.id); //con esto agregamos al state del proyecto que hemos seleccionado y se muestra en pantalla la nueva tarea del proyecto en el listado de tareas de ese proyecto
+
+        //reiniciar el form al estado inicial. Con esto cuando enviamos no va a haber nada escrito en el input
+        guardarTarea({
+            nombre: ''
+        })
     }
 
     return (
@@ -78,8 +88,9 @@ const FormTarea = () => {
                         value="agregar valor"
                     />
                 </div>
-
             </form>
+
+            {errortarea?<p className="error">El nombre de la tarea es obligatorio</p>:null}
         </div>
     );
 }

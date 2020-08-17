@@ -3,7 +3,8 @@ import TareaContext from "./tareaContext";
 import TareaReducer from './tareaReducer';
 import {
     TAREAS_PROYECTO,
-AGREGAR_TAREA,
+    AGREGAR_TAREA,
+    VALIDAR_TAREA
 } from "../../types";
 
 const TareaState = (props) => {
@@ -26,13 +27,14 @@ const TareaState = (props) => {
             {nombre: 'Elegir plataforma de pago', estado: false, proyectoId: 3},
         ],
 
-        tareasproyecto:null //estado para mostrar las tareas correspondiente a cada proyecto cuando clickamos en cada proyecto
+        tareasproyecto: null, //estado para mostrar las tareas correspondiente a cada proyecto cuando clickamos en cada proyecto
+        errortarea: false, //para validar formulario en FormTarea.js
     }
 
     //Crear dispatch y state
     const [state, dispatch] = useReducer(TareaReducer, initialState); //se le pasa el reducer y el estado inicial
 
-    //Crear las fx
+    //Crear las fx. Estas funciones se ven en RDT en Context.Provider
 
 
     //Obtener las tareas de un proyecto al hacer click en el proyecto
@@ -44,10 +46,18 @@ const TareaState = (props) => {
     }
 
     //Agregar una tarea al proyecto seleccionado
-    const  agregarTarea= (tarea) => {
+    const agregarTarea = (tarea) => {
         dispatch({
-        type:AGREGAR_TAREA,
+            type: AGREGAR_TAREA,
             payload: tarea
+        })
+    }
+
+    //Valida y muestra un error si es necesario
+    const validarTarea = () => {
+        dispatch({
+            type: VALIDAR_TAREA
+
         })
     }
 
@@ -57,8 +67,10 @@ const TareaState = (props) => {
             value={{
                 tareas: state.tareas,  //se disponibilizan las tareas a los componentes. Esto se puede ver en RDT en el reducer de TareaState
                 tareasproyecto: state.tareasproyecto,
+                errortarea: state.errortarea,//se usa en FormTarea.js
                 obtenerTareas, //se ocupa en Proyecto.js
-                agregarTarea //
+                agregarTarea, //se usa en FormTarea.js
+                validarTarea
 
             }}
         >
