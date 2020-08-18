@@ -6,7 +6,7 @@ import {
     AGREGAR_TAREA,
     VALIDAR_TAREA,
     ELIMINAR_TAREA,
-    ESTADO_TAREA
+    ESTADO_TAREA, TAREA_ACTUAL
 } from "../../types";
 
 const TareaState = (props) => {
@@ -31,6 +31,7 @@ const TareaState = (props) => {
 
         tareasproyecto: null, //estado para mostrar las tareas correspondiente a cada proyecto cuando clickamos en cada proyecto
         errortarea: false, //para validar formulario en FormTarea.js
+        tareaseleccionada: null, //la tarea seleccionada a editar
     }
 
     //Crear dispatch y state
@@ -78,17 +79,27 @@ const TareaState = (props) => {
                })
            }
 
+           //Extrae una tarea para edicion
+    const  guardarTareaActual= (tarea) => {
+        dispatch({
+            type: TAREA_ACTUAL ,
+            payload: tarea
+        })
+    }
+
     return (
         <TareaContext.Provider
             value={{
                 tareas: state.tareas,  //se disponibilizan las tareas a los componentes. Esto se puede ver en RDT en el reducer de TareaState
                 tareasproyecto: state.tareasproyecto,
                 errortarea: state.errortarea,//se usa en FormTarea.js
+                tareaseleccionada:state.tareaseleccionada,
                 obtenerTareas, //se ocupa en Proyecto.js
                 agregarTarea, //se usa en FormTarea.js
                 validarTarea,
                 eliminarTarea,
-                cambiarEstadoTarea
+                cambiarEstadoTarea,
+                guardarTareaActual
 
             }}
         >

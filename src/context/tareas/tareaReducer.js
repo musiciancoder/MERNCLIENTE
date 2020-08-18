@@ -1,6 +1,6 @@
 import {
     TAREAS_PROYECTO,
-    AGREGAR_TAREA, VALIDAR_TAREA, ELIMINAR_TAREA, ESTADO_TAREA
+    AGREGAR_TAREA, VALIDAR_TAREA, ELIMINAR_TAREA, ESTADO_TAREA, TAREA_ACTUAL
 } from "../../types";
 
 
@@ -32,7 +32,12 @@ export default (state, action) => {
         case ESTADO_TAREA:
             return {
                 ...state,
-                tareas: state.tareasproyecto.map(tarea => tarea.id === action.payload.id? action.payload: tarea) //action.payload.id porque en el state estamos pasando la tarea completa como parametro
+                tareas: state.tareasproyecto.map(tarea => tarea.id === action.payload.id ? action.payload : tarea) //action.payload.id porque en el state estamos pasando la tarea completa como parametro
+            }
+        case TAREA_ACTUAL: //al hacer click en boton "editar", se debe verificar un cambio en el state de esa tarea en Context.Provider
+            return {
+                ...state,
+                tareaseleccionada: action.payload //el payload es la tarea completa
             }
         default:
             return state;
