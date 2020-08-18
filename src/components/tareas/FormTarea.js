@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import ProyectoContext from "../../context/proyectos/proyectoContext";
 import TareaContext from "../../context/tareas/tareaContext";
 
@@ -12,7 +12,16 @@ const FormTarea = () => {
     //Obtener el state por medio de context
     const tareasContext = useContext(TareaContext);
     //destructuring (fn tipo "Action" de refux, ya que contiene type).
-    const {errortarea, agregarTarea, validarTarea, obtenerTareas} = tareasContext;
+    const {tareaseleccionada, errortarea, agregarTarea, validarTarea, obtenerTareas} = tareasContext;
+
+    //Effect que detecta si hay una tarea seleccionada para editar
+    useEffect(() => {
+        if (tareaseleccionada !== null) {
+            guardarTarea(tareaseleccionada);
+        } else {
+            guardarTarea({nombre: ''});
+        }
+    }, [tareaseleccionada]);
 
     //State del formulario para crear tarea
     const [tarea, guardarTarea] = useState({
@@ -41,7 +50,7 @@ const FormTarea = () => {
         e.preventDefault();
 
         //validar
-        if (nombre.trim()===''){
+        if (nombre.trim() === '') {
             validarTarea();
             return;
         }
@@ -85,12 +94,12 @@ const FormTarea = () => {
                         type="submit"
                         className="btn btn-primario btn-submit btn-block"
                         //value={tareaseleccionada ? 'Editar Tarea' : 'Agregar Tarea'}
-                        value="agregar valor"
+                        value={tareaseleccionada? 'Editar Tarea': 'Agregar Tarea'}
                     />
                 </div>
             </form>
 
-            {errortarea?<p className="error">El nombre de la tarea es obligatorio</p>:null}
+            {errortarea ? <p className="error">El nombre de la tarea es obligatorio</p> : null}
         </div>
     );
 }
