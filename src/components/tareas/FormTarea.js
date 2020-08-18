@@ -12,7 +12,7 @@ const FormTarea = () => {
     //Obtener el state por medio de context
     const tareasContext = useContext(TareaContext);
     //destructuring (fn tipo "Action" de refux, ya que contiene type).
-    const {tareaseleccionada, errortarea, agregarTarea, validarTarea, obtenerTareas} = tareasContext;
+    const {tareaseleccionada, errortarea, agregarTarea, validarTarea, obtenerTareas, actualizarTarea} = tareasContext;
 
     //Effect que detecta si hay una tarea seleccionada para editar
     useEffect(() => {
@@ -38,7 +38,7 @@ const FormTarea = () => {
     //Array destructuring para extraer el proyecto actual ( el proyecto que clickamos )
     const [proyectoActual] = proyecto;
 
-    //Leer los valores del formulario
+    //Leer los valores del formulario y cambiar el estado de tarea
     const handleChange = (e) => {
         guardarTarea({
             ...tarea,
@@ -55,13 +55,17 @@ const FormTarea = () => {
             return;
         }
 
-        //pasar la validacion
+        //Revisar si es edicion de tarea o es nueva tarea
+        if (tareaseleccionada ===null){ //tarea nueva
+            //agreagar la nueva tarea al state de tarea
+            //en estado inicial tarea solo tenia el nombre como atributo, ahora le estamos agregando proyectoId, es decir el id del proyecto que se ha clikado
+            tarea.proyectoId = proyectoActual.id;
+            tarea.estado = false;//tb se agrega como atributo
+            agregarTarea(tarea);
+        }else{ //editando tarea antigua
+            actualizarTarea(tarea); //el state de tarea ya habia sido actualizado anteriormente, cuando el usuario comenzó a escribir en el input para editar la tarea
+        }
 
-        //agreagar la nueva tarea al state de tarea
-        //en estado inicial tarea solo tenia el nombre como atributo, ahora le estamos agregando proyectoId, es decir el id del proyecto que se ha clikado
-        tarea.proyectoId = proyectoActual.id;
-        tarea.estado = false;//tb se agrega como atributo
-        agregarTarea(tarea);
 
         //Obtener y filtrar las tareas del proyecto actual
         obtenerTareas(proyectoActual.id); //con esto agregamos al state del proyecto que hemos seleccionado y se muestra en pantalla la nueva tarea del proyecto en el listado de tareas de ese proyecto
@@ -93,7 +97,6 @@ const FormTarea = () => {
                     <input
                         type="submit"
                         className="btn btn-primario btn-submit btn-block"
-                        //value={tareaseleccionada ? 'Editar Tarea' : 'Agregar Tarea'}
                         value={tareaseleccionada? 'Editar Tarea': 'Agregar Tarea'}
                     />
                 </div>

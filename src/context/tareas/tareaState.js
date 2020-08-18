@@ -6,7 +6,7 @@ import {
     AGREGAR_TAREA,
     VALIDAR_TAREA,
     ELIMINAR_TAREA,
-    ESTADO_TAREA, TAREA_ACTUAL
+    ESTADO_TAREA, TAREA_ACTUAL, ACTUALIZAR_TAREA
 } from "../../types";
 
 const TareaState = (props) => {
@@ -87,6 +87,14 @@ const TareaState = (props) => {
         })
     }
 
+    //Actualiza el array de tareas, con la tarea que estamos editando
+       const  actualizarTarea= (tarea) => {
+               dispatch({
+                   type: ACTUALIZAR_TAREA,
+                   payload: tarea
+               })
+           }
+
     return (
         <TareaContext.Provider
             value={{
@@ -99,7 +107,8 @@ const TareaState = (props) => {
                 validarTarea,
                 eliminarTarea,
                 cambiarEstadoTarea,
-                guardarTareaActual
+                guardarTareaActual,
+                actualizarTarea
 
             }}
         >

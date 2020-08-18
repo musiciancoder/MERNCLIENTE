@@ -1,6 +1,6 @@
 import {
     TAREAS_PROYECTO,
-    AGREGAR_TAREA, VALIDAR_TAREA, ELIMINAR_TAREA, ESTADO_TAREA, TAREA_ACTUAL
+    AGREGAR_TAREA, VALIDAR_TAREA, ELIMINAR_TAREA, ESTADO_TAREA, TAREA_ACTUAL, ACTUALIZAR_TAREA
 } from "../../types";
 
 
@@ -29,16 +29,20 @@ export default (state, action) => {
                 tareas: state.tareas.filter(tarea => tarea.id !== action.payload)
 
             }
-        case ESTADO_TAREA:
+        case ACTUALIZAR_TAREA: //para editar una tarea
+        case ESTADO_TAREA: //botones completo, incompleto
             return {
                 ...state,
-                tareas: state.tareasproyecto.map(tarea => tarea.id === action.payload.id ? action.payload : tarea) //action.payload.id porque en el state estamos pasando la tarea completa como parametro
+                //deja igual todas las otras tareas, excepto la que estamos editando
+                tareas: state.tareas.map(tarea => tarea.id === action.payload.id ? action.payload : tarea) //action.payload.id porque en el state estamos pasando la tarea completa como parametro
             }
         case TAREA_ACTUAL: //al hacer click en boton "editar", se debe verificar un cambio en el state de esa tarea en Context.Provider
             return {
                 ...state,
-                tareaseleccionada: action.payload //el payload es la tarea completa
+                tareaseleccionada: action.payload //el payload es la tarea completa que se obtiene al hacer click en boton editar en Tarea.js
             }
+
+
         default:
             return state;
     }
