@@ -5,7 +5,8 @@ import {
     TAREAS_PROYECTO,
     AGREGAR_TAREA,
     VALIDAR_TAREA,
-    ELIMINAR_TAREA
+    ELIMINAR_TAREA,
+    ESTADO_TAREA
 } from "../../types";
 
 const TareaState = (props) => {
@@ -69,6 +70,13 @@ const TareaState = (props) => {
                    payload: id
                })
            }
+           //Cambia el estado de cada tarea. Con esto al apretar el boton de Completo pasa a incompleto y vice-versa
+       const cambiarEstadoTarea = (tarea) => {
+               dispatch({
+                   type: ESTADO_TAREA ,
+                   payload: tarea
+               })
+           }
 
     return (
         <TareaContext.Provider
@@ -79,7 +87,8 @@ const TareaState = (props) => {
                 obtenerTareas, //se ocupa en Proyecto.js
                 agregarTarea, //se usa en FormTarea.js
                 validarTarea,
-                eliminarTarea
+                eliminarTarea,
+                cambiarEstadoTarea
 
             }}
         >
