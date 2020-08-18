@@ -1,6 +1,6 @@
 import {
     TAREAS_PROYECTO,
-    AGREGAR_TAREA, VALIDAR_TAREA, ELIMINAR_TAREA, ESTADO_TAREA, TAREA_ACTUAL, ACTUALIZAR_TAREA
+    AGREGAR_TAREA, VALIDAR_TAREA, ELIMINAR_TAREA, ESTADO_TAREA, TAREA_ACTUAL, ACTUALIZAR_TAREA, LIMPIAR_TAREA
 } from "../../types";
 
 
@@ -40,6 +40,11 @@ export default (state, action) => {
             return {
                 ...state,
                 tareaseleccionada: action.payload //el payload es la tarea completa que se obtiene al hacer click en boton editar en Tarea.js
+            }
+        case LIMPIAR_TAREA :
+            return {
+                ...state,
+                tareaseleccionada: null
             }
 
 

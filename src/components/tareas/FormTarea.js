@@ -12,7 +12,7 @@ const FormTarea = () => {
     //Obtener el state por medio de context
     const tareasContext = useContext(TareaContext);
     //destructuring (fn tipo "Action" de refux, ya que contiene type).
-    const {tareaseleccionada, errortarea, agregarTarea, validarTarea, obtenerTareas, actualizarTarea} = tareasContext;
+    const {tareaseleccionada, errortarea, agregarTarea, validarTarea, obtenerTareas, actualizarTarea, limpiarTarea} = tareasContext;
 
     //Effect que detecta si hay una tarea seleccionada para editar
     useEffect(() => {
@@ -66,6 +66,8 @@ const FormTarea = () => {
             actualizarTarea(tarea); //el state de tarea ya habia sido actualizado anteriormente, cuando el usuario comenzó a escribir en el input para editar la tarea
         }
 
+        //Elimina tareaseleccionada del state
+        limpiarTarea();
 
         //Obtener y filtrar las tareas del proyecto actual
         obtenerTareas(proyectoActual.id); //con esto agregamos al state del proyecto que hemos seleccionado y se muestra en pantalla la nueva tarea del proyecto en el listado de tareas de ese proyecto
