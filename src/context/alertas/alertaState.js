@@ -12,13 +12,13 @@ const AlertaState = (props) => {
 
     const [state, dispatch] = useReducer(alertaReducer, initialState);
 
-    //Funciones
-       const mostrarAlerta = (msg, categoria) => {
+    //Funciones dispatch
+       const mostrarAlerta = (msg, categoria) => { //fn llamada al enviar el formulario para registro de usuario en NuevaCuenta.js
                dispatch({
                    type: MOSTRAR_ALERTA,
                    payload: {
                        msg,
-                       categoria
+                       categoria //para dar un estilo
                    }
                });
 
