@@ -40,9 +40,20 @@ const NuevaCuenta = () => {
             confirmar.trim()==='')
         {
               mostrarAlerta('Todos los campos son obligatorios','alerta-error');
+              return; //para no seguir con el codigo q viene a contimuacion
         }
 
         //Revisar que password minimo de 6 caracteres
+        if (password.length<6){
+            mostrarAlerta('El password debe ser de al menos 6 caracteres', 'alerta-error');
+            return;
+        }
+
+        //Que los 2 password sean iguales
+        if (password!==confirmar ){
+            mostrarAlerta('Los password deben ser iguales','alerta-error');
+            return;
+        }
 
         //Pasarlo al action
     }
@@ -98,7 +109,7 @@ const NuevaCuenta = () => {
                         <input
                             type="password"
                             id="confirmar"
-                            name="password"
+                            name="confirmar"
                             placeholder="Repite tu Password"
                             value={confirmar}
                             onChange={onChange}
