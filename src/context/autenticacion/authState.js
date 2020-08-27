@@ -31,18 +31,26 @@ const AuthState = props => {
         try {
             //llamada al backend
             const respuesta = await clienteAxios.post('/api/usuarios',datos); //clienteAxios definido en carpeta Config
-            console.log(respuesta); //el token viene en esta respuesta
+            console.log(respuesta); //el token viene en esta respuesta desde el back desde usuarioController.js
 
             dispatch({
-                type: REGISTRO_EXITOSO
+                type: REGISTRO_EXITOSO,
+                payload:respuesta.data //aca va el token
             })
 
         } catch (error) {
 
-            console.log(error);
+            const alerta = {
+                msg: error.response.data.msg, //response.data.msg del backend linea 35 de usuarioController.js  return res.status(400).json({ msg: 'El usuario ya existe' });
+                categoria: 'alerta-error'
+            }
+
+            console.log(error.response); //asi se ve el error en axios
+            console.log("Mensaje: " + error.response.data.msg);
 
             dispatch({
-                type: REGISTRO_ERROR
+                type: REGISTRO_ERROR,
+                payload: alerta
             })
 
         }
