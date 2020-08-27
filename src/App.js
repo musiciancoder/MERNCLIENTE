@@ -10,6 +10,9 @@ import AuthState from "./context/autenticacion/authState";
 
 //Proyecto iniciado con react-router-dom
 function App() {
+
+    console.log(process.env.REACT_APP_BACKEND_URL); //Prueba variable entorno desarrollo
+
     return (
         //Esto equivale al <NombreProvider> del context normal
         <ProyectoState>
