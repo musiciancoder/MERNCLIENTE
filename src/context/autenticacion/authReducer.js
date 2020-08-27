@@ -13,7 +13,7 @@ export default (state, action) => {
     switch(action.type) {
         case REGISTRO_EXITOSO:
         case LOGIN_EXITOSO:
-            localStorage.setItem('token', action.payload.token);
+            localStorage.setItem('token', action.payload.token); //el token viene de usuarioController en el backend
             return {
                 ...state,
                 autenticado: true,

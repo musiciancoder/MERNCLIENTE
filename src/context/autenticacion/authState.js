@@ -1,34 +1,66 @@
 import React, {useReducer} from 'react';
 import AuthContext from './authContext';
 import AuthReducer from './authReducer';
-import {REGISTRO_EXITOSO, REGISTRO_ERROR, OBTENER_USUARIO, LOGIN_EXITOSO, LOGIN_ERROR, CERRAR_SESION} from "../../types";
+import {
+    REGISTRO_EXITOSO,
+    REGISTRO_ERROR,
+    OBTENER_USUARIO,
+    LOGIN_EXITOSO,
+    LOGIN_ERROR,
+    CERRAR_SESION
+} from "../../types";
+import clienteAxios from "../../config/axios";
 
 
 const AuthState = props => {
     //ESTADO INICIAL PARA AUTENTICACION DE USUARIO
-const initialState = {
-    token: localStorage.getItem('token'),
-    autenticado: null, //inicialmente no esta autenticado
-    usuario: null,
-    mensaje: null
+    const initialState = {
+        token: localStorage.getItem('token'),
+        autenticado: null, //inicialmente no esta autenticado
+        usuario: null,
+        mensaje: null
 
-}
+    }
 
-const [state, dispatch] = useReducer(AuthReducer, initialState);
-
-//funciones
+    const [state, dispatch] = useReducer(AuthReducer, initialState);
 
 
-    return(
-<AuthContext.Provider value={{
-    token: state.token,
-    autenticado: state.autenticado,
-    usuario:state.usuario,
-    mensaje:state.mensaje
 
-}}>
-    {props.children}
-</AuthContext.Provider>
+    const registrarUsuario = async (datos) => {
+
+        try {
+            //llamada al backend
+            const respuesta = await clienteAxios.post('/api/usuarios',datos); //clienteAxios definido en carpeta Config
+            console.log(respuesta); //el token viene en esta respuesta
+
+            dispatch({
+                type: REGISTRO_EXITOSO
+            })
+
+        } catch (error) {
+
+            console.log(error);
+
+            dispatch({
+                type: REGISTRO_ERROR
+            })
+
+        }
+
+    }
+
+
+    return (
+        <AuthContext.Provider value={{
+            token: state.token,
+            autenticado: state.autenticado,
+            usuario: state.usuario,
+            mensaje: state.mensaje,
+            registrarUsuario
+
+        }}>
+            {props.children}
+        </AuthContext.Provider>
     )
 }
 

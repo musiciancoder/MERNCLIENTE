@@ -1,5 +1,5 @@
 import React, {Fragment, useContext} from "react";
-import FormTarea from "./FormTarea";
+
 import Tarea from './Tarea';
 
 import ProyectoContext from "../../context/proyectos/proyectoContext";
