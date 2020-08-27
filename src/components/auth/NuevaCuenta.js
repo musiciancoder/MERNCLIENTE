@@ -1,10 +1,11 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {Link} from "react-router-dom";
 import AlertaContext from "../../context/alertas/alertaContext";
 import AuthContext from '../../context/autenticacion/authContext'
+import { withRouter } from 'react-router-dom'; //PARA QUE EL PUSH HISTRORY FUNCIONE!!
 
 //COMPONENTE PARA QUE EL USUARIO SE REGISTRE
-const NuevaCuenta = () => {
+const NuevaCuenta = (props) => {
 
     //extraer valores del context
 
@@ -12,7 +13,23 @@ const NuevaCuenta = () => {
     const {alerta, mostrarAlerta} = alertaContext;
 
     const authContext = useContext(AuthContext);
-    const {registrarUsuario} = authContext;
+    const {mensaje, autenticado ,registrarUsuario} = authContext;
+
+    //EN caso q el usuario se haya autenticado o registrado o sea un usuario duplicado
+  //  const history = useHistory();
+
+    useEffect ( () => {
+        if (autenticado){
+            props.history.push('/proyectos');//una vez q el usuario se registre, lo lleva a los proyectos
+        }
+
+        if(mensaje) {
+            mostrarAlerta(mensaje.msg, mensaje.categoria);
+        }
+
+
+     },[mensaje, autenticado, props.history] ); //tenemos acceso a props.history porque estamos ocupando react-router-dom
+
 
     //state para iniciar sesion
     const [usuario, guardarUsuario] = useState ({

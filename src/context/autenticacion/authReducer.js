@@ -36,7 +36,7 @@ export default (state, action) => {
                 token: null,
                 usuario: null,
                 autenticado: null,
-                mensaje: action.payload,
+                mensaje: action.payload, //mensaje: alerta y alerta trae el msg del backend y categoria que es el estilo
                 cargando: false
             }
 
