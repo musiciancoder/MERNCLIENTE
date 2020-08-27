@@ -25,7 +25,7 @@ const AuthState = props => {
     const [state, dispatch] = useReducer(AuthReducer, initialState);
 
 
-
+   //Se registra por primera vez
     const registrarUsuario = async (datos) => {
 
         try {
@@ -36,7 +36,10 @@ const AuthState = props => {
             dispatch({
                 type: REGISTRO_EXITOSO,
                 payload:respuesta.data //aca va el token
-            })
+            });
+
+            //Obtener el usuario
+            usuarioAutenticado();
 
         } catch (error) {
 
@@ -52,9 +55,24 @@ const AuthState = props => {
                 type: REGISTRO_ERROR,
                 payload: alerta
             })
+        }
+    }
 
+    //Retorna el usuario autenticado
+    const usuarioAutenticado  =  async () => {
+        const token = localStorage.getItem('token');
+        if (token){
+            //Fn para enviar el token por headers
         }
 
+        try {
+            const respuesta = await clienteAxios.get('/api/auth');
+            console.log(respuesta);
+        } catch (error) {
+            dispatch({
+                type: LOGIN_ERROR
+            })
+        }
     }
 
 
