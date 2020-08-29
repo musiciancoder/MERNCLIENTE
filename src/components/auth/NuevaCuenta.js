@@ -76,7 +76,7 @@ const NuevaCuenta = (props) => {
             return;
         }
 
-        //Pasarlo al action
+        //Pasar lo que se ha escrito en los inputs al action
         registrarUsuario({
             nombre,
             email,

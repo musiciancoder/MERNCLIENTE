@@ -10,6 +10,7 @@ import {
     CERRAR_SESION
 } from "../../types";
 import clienteAxios from "../../config/axios";
+import tokenAuth from "../../config/token";
 
 
 const AuthState = props => {
@@ -38,7 +39,7 @@ const AuthState = props => {
                 payload:respuesta.data //aca va el token
             });
 
-            //Obtener el usuario
+            //Obtener el usuario autenticado
             usuarioAutenticado();
 
         } catch (error) {
@@ -59,15 +60,20 @@ const AuthState = props => {
     }
 
     //Retorna el usuario autenticado
-    const usuarioAutenticado  =  async () => {
-        const token = localStorage.getItem('token');
+    const usuarioAutenticado  =  async () => { //fn se llama en este archivo mas arriba en Registrar usuario
+        const token = localStorage.getItem('token'); //el token ya estaba con setItem con REGISTRO_EXITOSO en el reducer
         if (token){
             //Fn para enviar el token por headers
+            tokenAuth(token);
         }
 
         try {
             const respuesta = await clienteAxios.get('/api/auth');
-            console.log(respuesta);
+            //console.log(respuesta); //de backend
+            dispatch({
+                type:OBTENER_USUARIO,
+                payload: respuesta.data.usuario //de backend
+            })
         } catch (error) {
             dispatch({
                 type: LOGIN_ERROR
