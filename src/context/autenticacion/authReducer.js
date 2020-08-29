@@ -18,7 +18,7 @@ export default (state, action) => {
                 ...state,
                 autenticado: true,
                 mensaje: null,
-                //cargando: false
+                cargando: false
             }
         case OBTENER_USUARIO:
             return {

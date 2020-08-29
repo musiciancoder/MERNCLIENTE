@@ -6,7 +6,7 @@ const Barra = () => {
 
     //Extraer la informacion de autenticacion
     const authContext = useContext(AuthContext);
-    const {usuario,usuarioAutenticado} = authContext;
+    const {usuario,usuarioAutenticado, cerrarSesion} = authContext;
 
     //Para que cuando se cargue localhost:3000/proyectos esté disponible en Barra.js el usuarioAutenticado y lo podamos mostrar
     useEffect(() => {
@@ -20,7 +20,9 @@ const Barra = () => {
                 :null
             }
             <nav className="nav-principal">
-                <a href="#!">Cerrar Sesión</a>
+                <button className="btn btn-blank cerrar-sesion"
+                onClick={()=>cerrarSesion()}
+                >Cerrar Sesión</button>
             </nav>
         </header>
 
