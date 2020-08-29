@@ -26,17 +26,17 @@ const AuthState = props => {
     const [state, dispatch] = useReducer(AuthReducer, initialState);
 
 
-   //Se registra por primera vez
+    //Se registra por primera vez
     const registrarUsuario = async (datos) => {
 
         try {
             //llamada al backend
-            const respuesta = await clienteAxios.post('/api/usuarios',datos); //clienteAxios definido en carpeta Config
+            const respuesta = await clienteAxios.post('/api/usuarios', datos); //clienteAxios definido en carpeta Config
             console.log(respuesta); //el token viene en esta respuesta desde el back desde usuarioController.js
 
             dispatch({
                 type: REGISTRO_EXITOSO,
-                payload:respuesta.data //aca va el token
+                payload: respuesta.data //aca va el token
             });
 
             //Obtener el usuario autenticado
@@ -60,9 +60,9 @@ const AuthState = props => {
     }
 
     //Retorna el usuario autenticado
-    const usuarioAutenticado  =  async () => { //fn se llama en este archivo mas arriba en Registrar usuario
+    const usuarioAutenticado = async () => { //fn se llama en este archivo mas arriba en Registrar usuario
         const token = localStorage.getItem('token'); //el token ya estaba con setItem con REGISTRO_EXITOSO en el reducer
-        if (token){
+        if (token) {
             //Fn para enviar el token por headers
             tokenAuth(token);
         }
@@ -71,13 +71,33 @@ const AuthState = props => {
             const respuesta = await clienteAxios.get('/api/auth');
             //console.log(respuesta); //de backend
             dispatch({
-                type:OBTENER_USUARIO,
+                type: OBTENER_USUARIO,
                 payload: respuesta.data.usuario //de backend
             })
         } catch (error) {
             dispatch({
                 type: LOGIN_ERROR
             })
+        }
+    }
+
+    //Cuando el usuario inicia sesión (en el formulario para loguearse)
+    const iniciarSesion = async (datos) => {
+
+        try {
+            const respuesta = await clienteAxios.post('/api/auth', datos);
+            console.log(respuesta);
+        } catch (error) {
+            console.log(error.response.data.msg);
+            const alerta = {
+                msg: error.response.data.msg, //response.data.msg del backend linea 35 de usuarioController.js  return res.status(400).json({ msg: 'El usuario ya existe' });
+                categoria: 'alerta-error'
+            }
+            dispatch({
+                type: LOGIN_ERROR,
+                payload: alerta
+            })
+
         }
     }
 
@@ -88,7 +108,8 @@ const AuthState = props => {
             autenticado: state.autenticado,
             usuario: state.usuario,
             mensaje: state.mensaje,
-            registrarUsuario
+            registrarUsuario,
+            iniciarSesion
 
         }}>
             {props.children}
