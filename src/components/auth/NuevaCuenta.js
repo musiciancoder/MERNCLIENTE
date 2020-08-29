@@ -17,7 +17,6 @@ const NuevaCuenta = (props) => {
 
     //EN caso q el usuario se haya autenticado o registrado o sea un usuario duplicado
   //  const history = useHistory();
-
     useEffect ( () => {
         if (autenticado){
             props.history.push('/proyectos');//una vez q el usuario se registre, lo lleva a los proyectos

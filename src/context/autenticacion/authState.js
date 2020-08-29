@@ -59,8 +59,8 @@ const AuthState = props => {
         }
     }
 
-    //Retorna el usuario autenticado
-    const usuarioAutenticado = async () => { //fn se llama en este archivo mas arriba en Registrar usuario
+    //Retorna el usuario autenticado. fn se llama al Registrar usuario u al Loguear usuario
+    const usuarioAutenticado = async () => {
         const token = localStorage.getItem('token'); //el token ya estaba con setItem con REGISTRO_EXITOSO en el reducer
         if (token) {
             //Fn para enviar el token por headers
@@ -86,7 +86,16 @@ const AuthState = props => {
 
         try {
             const respuesta = await clienteAxios.post('/api/auth', datos);
-            console.log(respuesta);
+            console.log("Soy respuesta " + respuesta);
+
+            dispatch({
+                type: LOGIN_EXITOSO,
+                payload: respuesta.data //acá va el token de autenticacion
+            });
+
+            //Obtener el usuario autenticado
+            usuarioAutenticado();
+
         } catch (error) {
             console.log(error.response.data.msg);
             const alerta = {
@@ -96,8 +105,7 @@ const AuthState = props => {
             dispatch({
                 type: LOGIN_ERROR,
                 payload: alerta
-            })
-
+            });
         }
     }
 
