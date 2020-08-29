@@ -75,7 +75,7 @@ const NuevaCuenta = (props) => {
             return;
         }
 
-        //Pasar lo que se ha escrito en los inputs al action
+        //Pasar lo que se ha escrito en los inputs al action en authState.js
         registrarUsuario({
             nombre,
             email,

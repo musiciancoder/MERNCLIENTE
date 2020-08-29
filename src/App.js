@@ -7,9 +7,16 @@ import ProyectoState from "./context/proyectos/proyectoState";
 import TareaState from "./context/tareas/tareaState";
 import AlertaState from "./context/alertas/alertaState"
 import AuthState from "./context/autenticacion/authState";
+import tokenAuth from "./config/token";
 
 //Proyecto iniciado con react-router-dom
 function App() {
+
+    //Revisar si tenemos un token de autenticacion
+    const token = localStorage.getItem('token');
+    if (token) {
+        tokenAuth(token); //enviar token via headers
+    }
 
     console.log(process.env.REACT_APP_BACKEND_URL); //Prueba variable entorno desarrollo
 
