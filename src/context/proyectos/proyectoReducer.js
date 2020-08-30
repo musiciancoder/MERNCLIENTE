@@ -1,7 +1,7 @@
 //el reducer usando useReducer es similar al de redux, pero a diferencia de este NO contiene un estado inicial (que con useReducer esta en el state)
 import {
     FORMULARIO_PROYECTO, OBTENER_PROYECTOS, AGREGAR_PROYECTO, VALIDAR_FORMULARIO,
-    PROYECTO_ACTUAL, ELIMINAR_PROYECTO
+    PROYECTO_ACTUAL, ELIMINAR_PROYECTO, PROYECTO_ERROR
 } from "../../types";
 
 export default (state, action) => {
@@ -41,6 +41,12 @@ export default (state, action) => {
                 proyectos: state.proyectos.filter(proyecto => proyecto._id !== action.payload),
                 proyecto: null //vuel vo al proyecto a su valor en initialState (null) para q no haya un proyecto activo (seleccionado)
             }
+        case PROYECTO_ERROR:
+            return {
+                ...state,
+                mensaje: action.payload //la alerta de error
+            }
+
             default:
             return state;
     }

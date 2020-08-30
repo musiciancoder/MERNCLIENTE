@@ -1,6 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import Proyecto from "./Proyecto";
 import ProyectoContext from "../../context/proyectos/proyectoContext";
+import AlertaContext from "../../context/alertas/alertaContext";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
 
 const ListadoProyectos = () => {
@@ -8,7 +9,10 @@ const ListadoProyectos = () => {
 
     //Extraer proyectos desde el context (en proyectoState)
     const proyectosContext = useContext(ProyectoContext);
-    const {proyectos, obtenerProyectos} = proyectosContext;
+    const {mensaje, proyectos, obtenerProyectos} = proyectosContext;
+
+    const alertaContext = useContext(AlertaContext);
+    const {alerta, mostrarAlerta} = alertaContext;
 
     //Obtener proyectos cuando carga el componente
     useEffect ( () => {
@@ -24,8 +28,13 @@ const ListadoProyectos = () => {
             // eslint-disable-next-line
         }, []);*/
 
+        //si hay un error
+        if(mensaje){
+            mostrarAlerta(mensaje.msg, mensaje.categoria); //recordar q mensaje.msg lo da el backend
+        }
 
-    },[] );
+
+    },[mensaje] ); //mensaje aparece en caso que haya algun error
 
     //Revisar si proyectos tiene contenido
     if(proyectos.length===0) return <p>No hay proyectos, comienza creando uno</p>;
@@ -35,7 +44,7 @@ const ListadoProyectos = () => {
         <ul className="listado-proyectos">
 
 
-            {/*{ alerta   ? ( <div className={`alerta ${alerta.categoria} `}>{alerta.msg}</div>  ) : null  }*/}
+            { alerta   ? ( <div className={`alerta ${alerta.categoria} `}>{alerta.msg}</div>  ) : null  }
 
 
             <TransitionGroup>

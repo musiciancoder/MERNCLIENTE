@@ -7,7 +7,7 @@ import proyectoContext from "./proyectoContext";
 import proyectoReducer from "./proyectoReducer";
 import {
     AGREGAR_PROYECTO, FORMULARIO_PROYECTO, OBTENER_PROYECTOS,
-    VALIDAR_FORMULARIO, PROYECTO_ACTUAL, ELIMINAR_PROYECTO
+    VALIDAR_FORMULARIO, PROYECTO_ACTUAL, ELIMINAR_PROYECTO, PROYECTO_ERROR
 } from '../../types';
 
 import clienteAxios from "../../config/axios";
@@ -19,7 +19,8 @@ const ProyectoState = props => {
         proyectos: [], //contiene los proyectos a mostrar
         formulario: false, //mostrar condicionalmente formulario
         errorformulario: false, //mostrar condicionalmente
-        proyecto: null //para q al hacer click en un proyecto se pueda manipular
+        proyecto: null, //para q al hacer click en un proyecto se pueda manipular
+        mensaje: null //para mostrar alerta si hay errores
     }
 
     //useReducer provoca que el estado sea manejado como una mezcla entre Context y Redux
@@ -45,7 +46,17 @@ const ProyectoState = props => {
                 payload: resultado.data.proyectos //solo con payload: resultado.data marca error "map is not a function"
             })
 
-        } catch (e) {
+        } catch (error) {
+            //   console.log(error);
+            const alerta = {
+                msg: 'hubo un error',
+                categoria: 'alerta-error'
+            }
+
+            dispatch({
+                type: PROYECTO_ERROR,
+                payload: alerta
+            })
         }
 
     }
@@ -62,7 +73,16 @@ const ProyectoState = props => {
                 payload: resultado.data
             })
         } catch (error) {
-            console.log(error);
+            //   console.log(error);
+            const alerta = {
+                msg: 'hubo un error',
+                categoria: 'alerta-error'
+            }
+
+            dispatch({
+                type: PROYECTO_ERROR,
+                payload: alerta
+            })
         }
     }
 
@@ -84,17 +104,24 @@ const ProyectoState = props => {
 
     // Elimina un proyecto
     const eliminarProyecto = async (proyectoId) => {
-
         try {
             await clienteAxios.delete(`/api/proyectos/${proyectoId}`);
             dispatch({
-                type:ELIMINAR_PROYECTO,
-                payload:proyectoId
+                type: ELIMINAR_PROYECTO,
+                payload: proyectoId
             })
         } catch (error) {
-            console.log(error);
-        }
+            //   console.log(error);
+            const alerta = {
+                msg: 'hubo un error',
+                categoria: 'alerta-error'
+            }
 
+            dispatch({
+                type: PROYECTO_ERROR,
+                payload: alerta
+            })
+        }
     }
 
     return (
@@ -105,6 +132,7 @@ const ProyectoState = props => {
                 formulario: state.formulario, //valor que pasamos para que este disponible
                 errorformulario: state.errorformulario,
                 proyecto: state.proyecto, //array de proyecto (en rigor solo tiene uno, el proyectoActual que es el q selecciona el usuario. Esto lo diictó el return del reducer)
+                mensaje: state.mensaje,
                 mostrarFormulario,
                 obtenerProyectos,
                 agregarProyecto,
