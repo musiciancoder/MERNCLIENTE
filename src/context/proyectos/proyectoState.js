@@ -10,6 +10,8 @@ import {
     VALIDAR_FORMULARIO, PROYECTO_ACTUAL, ELIMINAR_PROYECTO
 } from '../../types';
 
+import clienteAxios from "../../config/axios";
+
 const ProyectoState = props => {
 
     const proyectos = [
@@ -49,17 +51,19 @@ const ProyectoState = props => {
     }
 
     //Agregar nuevo proyecto
-    const agregarProyecto = (proyecto) => { //fn llamada en NuevoProyecto, al hacer click en submit
+    const agregarProyecto = async (proyecto) => { //fn llamada en NuevoProyecto, al hacer click en submit
 
-        // Asignarle un id
-        proyecto.id = uuid();
+        try {
+            const resultado = await clienteAxios.post('/api/proyectos', proyecto); //enviar el proycto
+            console.log(resultado);
 
-        //Insertar projecto en el state
-        dispatch({
-            type: AGREGAR_PROYECTO,
-            payload: proyecto
-        })
-
+            dispatch({
+                type: AGREGAR_PROYECTO,
+                payload: resultado.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     //Validar el formulario por errores
