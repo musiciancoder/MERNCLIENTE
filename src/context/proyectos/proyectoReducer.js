@@ -38,7 +38,7 @@ export default (state, action) => {
             return {
                 ...state,
                 //notar que acá son proyectos, porque el array de proyectos va a cambiar
-                proyectos: state.proyectos.filter(proyecto => proyecto.id !== action.payload),
+                proyectos: state.proyectos.filter(proyecto => proyecto._id !== action.payload),
                 proyecto: null //vuel vo al proyecto a su valor en initialState (null) para q no haya un proyecto activo (seleccionado)
             }
             default:
