@@ -14,13 +14,6 @@ import clienteAxios from "../../config/axios";
 
 const ProyectoState = props => {
 
-    const proyectos = [
-        {id: 1, nombre: 'Tienda virtual'},
-        {id: 2, nombre: 'Intranet'},
-        {id: 3, nombre: 'Diseño de sitios'},
-        {id: 4, nombre: 'MERN'}
-    ]
-
     //Estado inicial (con Redux normal va en el reducer)
     const initialState = {
         proyectos: [], //contiene los proyectos a mostrar
@@ -42,12 +35,19 @@ const ProyectoState = props => {
         })
     }
 
-    //obtener los proyectos
-    const obtenerProyectos = () => {
-        dispatch({
-            type: OBTENER_PROYECTOS,
-            payload: proyectos
-        })
+    //obtener los proyectos listados
+    const obtenerProyectos = async () => {
+
+        try {
+            const resultado = await clienteAxios.get('/api/proyectos');
+            dispatch({
+                type: OBTENER_PROYECTOS,
+                payload: resultado.data.proyectos //solo con payload: resultado.data marca error "map is not a function"
+            })
+
+        } catch (e) {
+        }
+
     }
 
     //Agregar nuevo proyecto
@@ -84,12 +84,12 @@ const ProyectoState = props => {
 
     // Elimina un proyecto
 
-       const eliminarProyecto = (proyectoId) => {
-               dispatch({
-                   type: ELIMINAR_PROYECTO,
-                   payload: proyectoId
-               })
-           }
+    const eliminarProyecto = (proyectoId) => {
+        dispatch({
+            type: ELIMINAR_PROYECTO,
+            payload: proyectoId
+        })
+    }
 
     return (
         <proyectoContext.Provider  //Este es el provider, que en context normal va en el archivo NombreContext, es decir acá iría en el archivo proyectoContext,
