@@ -8,6 +8,7 @@ import TareaState from "./context/tareas/tareaState";
 import AlertaState from "./context/alertas/alertaState"
 import AuthState from "./context/autenticacion/authState";
 import tokenAuth from "./config/token";
+import RutaPrivada from "./components/rutas/RutaPrivada";
 
 //Proyecto iniciado con react-router-dom
 function App() {
@@ -32,7 +33,9 @@ function App() {
 
                             <Route exact path="/" component={Login}/>
                             <Route exact path="/nueva-cuenta" component={NuevaCuenta}/>
-                            <Route exact path="/proyectos" component={Proyectos}/>
+                            {/*RutaPrivada es higher order component, para que al acceder a "/proyectos" exija las credenciales del usuario;
+                            Con esto la idea es que cuando escribamos la url http://localhost:3000/proyectos nos enviará a autenticarnos si no lo estamos*/}
+                            <RutaPrivada exact path="/proyectos" component={Proyectos}/>
 
                         </Switch>
 
