@@ -9,13 +9,13 @@ export default (state, action) => {
         case TAREAS_PROYECTO:
             return {
                 ...state,
-                tareasproyecto: state.tareas.filter(tarea => tarea.proyectoId ===
+                tareasproyecto: state.tareasproyecto.filter(tarea => tarea.proyectoId ===
                     action.payload)
             }
         case AGREGAR_TAREA:
             return {
                 ...state,
-                tareas: [action.payload, ...state.tareas], //action.payload esta primero para que se muestre primero la tarea que acabamos de agregar
+                tareasproyecto: [action.payload, ...state.tareasproyecto], //action.payload esta primero para que se muestre primero la tarea que acabamos de agregar
                 errortarea: false
             }
         case VALIDAR_TAREA:
@@ -26,7 +26,7 @@ export default (state, action) => {
         case ELIMINAR_TAREA:
             return {
                 ...state,
-                tareas: state.tareas.filter(tarea => tarea.id !== action.payload)
+                tareasproyecto: state.tareasproyecto.filter(tarea => tarea.id !== action.payload)
 
             }
         case ACTUALIZAR_TAREA: //para editar una tarea
@@ -34,7 +34,7 @@ export default (state, action) => {
             return {
                 ...state,
                 //deja igual todas las otras tareas, excepto la que estamos editando
-                tareas: state.tareas.map(tarea => tarea.id === action.payload.id ? action.payload : tarea) //action.payload.id porque en el state estamos pasando la tarea completa como parametro
+                tareasproyecto: state.tareasproyecto.map(tarea => tarea.id === action.payload.id ? action.payload : tarea) //action.payload.id porque en el state estamos pasando la tarea completa como parametro
             }
         case TAREA_ACTUAL: //al hacer click en boton "editar", se debe verificar un cambio en el state de esa tarea en Context.Provider
             return {

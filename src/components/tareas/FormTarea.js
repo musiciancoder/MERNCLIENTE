@@ -59,7 +59,7 @@ const FormTarea = () => {
         if (tareaseleccionada ===null){ //tarea nueva
             //agreagar la nueva tarea al state de tarea
             //en estado inicial tarea solo tenia el nombre como atributo, ahora le estamos agregando proyectoId, es decir el id del proyecto que se ha clikado
-            tarea.proyectoId = proyectoActual.id;
+            tarea.proyectoId = proyectoActual._id;
             tarea.estado = false;//tb se agrega como atributo
             agregarTarea(tarea);
         }else{ //editando tarea antigua

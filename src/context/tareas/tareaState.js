@@ -1,7 +1,9 @@
 import React, {useReducer} from "react";
 import TareaContext from "./tareaContext";
 import TareaReducer from './tareaReducer';
-import {v4 as uuid} from "uuid";
+//import {v4 as uuid} from "uuid";
+import clienteAxios from "../../config/axios";
+
 import {
     TAREAS_PROYECTO,
     AGREGAR_TAREA,
@@ -14,23 +16,7 @@ const TareaState = (props) => {
 
     //Estado inicial para tareas. Aunque se declaran e inicializan en el State, se ven en RDT en el reducer
     const initialState = {
-        tareas: [
-            {id:1 ,nombre: 'Elegir plataforma', estado: true, proyectoId: 1},
-            {id:2 ,nombre: 'Elegir colores', estado: false, proyectoId: 2},
-            {id:3 ,nombre: 'Elegir plataforma de pago', estado: false, proyectoId: 3},
-            {id:4 ,nombre: 'Elegir hosting', estado: true, proyectoId: 4},
-            {id:5 ,nombre: 'Elegir plataforma', estado: true, proyectoId: 1},
-            {id:6 ,nombre: 'Elegir colores', estado: false, proyectoId: 2},
-            {id:7 ,nombre: 'Elegir plataforma de pago', estado: false, proyectoId: 3},
-            {id:8 ,nombre: 'Elegir plataforma', estado: true, proyectoId: 4},
-            {id:9 ,nombre: 'Elegir colores', estado: false, proyectoId: 1},
-            {id:10 ,nombre: 'Elegir plataforma de pago', estado: false, proyectoId: 2},
-            {id:11 ,nombre: 'Elegir plataforma', estado: true, proyectoId: 3},
-            {id:12 ,nombre: 'Elegir colores', estado: false, proyectoId: 4},
-            {id:13 ,nombre: 'Elegir plataforma de pago', estado: false, proyectoId: 3},
-        ],
-
-        tareasproyecto: null, //estado para mostrar las tareas correspondiente a cada proyecto cuando clickamos en cada proyecto
+        tareasproyecto: [], //estado para mostrar las tareas correspondiente a cada proyecto cuando clickamos en cada proyecto
         errortarea: false, //para validar formulario en FormTarea.js
         tareaseleccionada: null, //la tarea seleccionada a editar
     }
@@ -50,13 +36,20 @@ const TareaState = (props) => {
     }
 
     //Agregar una tarea al proyecto seleccionado
-    const agregarTarea = (tarea) => {
+    const agregarTarea = async (tarea) => {
         // Asignarle un id
-        tarea.id = uuid();
-        dispatch({
-            type: AGREGAR_TAREA,
-            payload: tarea
-        })
+       // tarea.id = uuid(); //no se usa con mongo, solo al principio
+        console.log(tarea);
+        try {
+            const resultado = await clienteAxios.post('/api/tareas', tarea);
+            console.log(resultado);
+        } catch (error) {
+            console.log(error);
+            dispatch({
+                type: AGREGAR_TAREA,
+                payload: tarea
+            })
+        }
     }
 
     //Valida y muestra un error si es necesario
@@ -109,7 +102,6 @@ const TareaState = (props) => {
     return (
         <TareaContext.Provider
             value={{
-                tareas: state.tareas,  //se disponibilizan las tareas a los componentes. Esto se puede ver en RDT en el reducer de TareaState
                 tareasproyecto: state.tareasproyecto,
                 errortarea: state.errortarea,//se usa en FormTarea.js
                 tareaseleccionada:state.tareaseleccionada,
