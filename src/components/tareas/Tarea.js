@@ -12,14 +12,14 @@ const Tarea = ({tarea}) => { //{tarea} desde ListadoTareas
 
     //Obtener el state por medio de context
     const tareasContext = useContext(TareaContext);
-    const {eliminarTarea, obtenerTareas, cambiarEstadoTarea, guardarTareaActual} = tareasContext;
+    const {eliminarTarea, obtenerTareas, actualizarTarea, guardarTareaActual} = tareasContext;
 
     //Extraer el proyecto
     const [proyectoActual] = proyecto;
 
     //Fn q se ejecuta cuando el usuario presiona el btn de eliminar tarea
     const tareaEliminar = (id) => {
-        eliminarTarea(id);
+        eliminarTarea(id, proyectoActual._id);
         obtenerTareas(proyectoActual.id);
         // obtenerTareas(proyecto[0].id); //forma alternativa a  la linea anterior
     }
@@ -31,7 +31,7 @@ const Tarea = ({tarea}) => { //{tarea} desde ListadoTareas
         } else {
             tarea.estado = true;
         }
-        cambiarEstadoTarea(tarea);
+        actualizarTarea(tarea);
     }
 
     //Agrega una tarea actual cuando el usuario desea editarla (fn llamada al presionar boton editar)
@@ -68,13 +68,15 @@ const Tarea = ({tarea}) => { //{tarea} desde ListadoTareas
                     <button
                         type="button"
                         className="btn-primario"
+                        //tarea es tareaproyecto definodo en initialstate en tareaState
                         onClick={()=>seleccionarTarea(tarea)}
                     >Editar
                     </button>
                     <button
                         type="button"
                         className="btn-secundario"
-                        onClick={() => tareaEliminar(tarea.id)}
+                        //tarea es tareaproyecto definodo en initialstate en tareaState
+                        onClick={() => tareaEliminar(tarea._id)}
                     >Eliminar
                     </button>
                 </div>

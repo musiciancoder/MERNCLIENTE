@@ -11,6 +11,8 @@ const Barra = () => {
     //Para que cuando se cargue localhost:3000/proyectos esté disponible en Barra.js el usuarioAutenticado y lo podamos mostrar
     useEffect(() => {
         usuarioAutenticado();
+
+        //eslint-disable-next-line
     }, []);
 
     return (

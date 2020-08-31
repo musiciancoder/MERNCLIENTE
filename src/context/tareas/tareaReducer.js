@@ -25,16 +25,20 @@ export default (state, action) => {
         case ELIMINAR_TAREA:
             return {
                 ...state,
-                tareasproyecto: state.tareasproyecto.filter(tarea => tarea.id !== action.payload)
+                tareasproyecto: state.tareasproyecto.filter(tarea => tarea._id !== action.payload)
 
             }
         case ACTUALIZAR_TAREA: //para editar una tarea
-        case ESTADO_TAREA: //botones completo, incompleto
+            return {
+                ...state,
+                tareasproyecto: state.tareasproyecto.map(tarea => tarea._id === action.payload._id ? action.payload : tarea )
+            }
+  /*      case ESTADO_TAREA: //botones completo, incompleto
             return {
                 ...state,
                 //deja igual todas las otras tareas, excepto la que estamos editando
                 tareasproyecto: state.tareasproyecto.map(tarea => tarea.id === action.payload.id ? action.payload : tarea) //action.payload.id porque en el state estamos pasando la tarea completa como parametro
-            }
+            } */
         case TAREA_ACTUAL: //al hacer click en boton "editar", se debe verificar un cambio en el state de esa tarea en Context.Provider
             return {
                 ...state,

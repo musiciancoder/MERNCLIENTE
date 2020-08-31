@@ -13,7 +13,9 @@ const RutaPrivada = ({component: Component, ...props}) => { // copia de los prop
     //Para que si recarga la pagina localhost:3000/proyectos siga estando autenticado
     useEffect(() => {
         usuarioAutenticado();
-    }, []);
+
+        //eslint-disable-next-line
+    },[] );
 
     return (
         <Route {...props} render={props => !autenticado && ! cargando? ( //si no esta autenticado...
