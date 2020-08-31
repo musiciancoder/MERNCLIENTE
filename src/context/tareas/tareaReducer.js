@@ -9,8 +9,7 @@ export default (state, action) => {
         case TAREAS_PROYECTO:
             return {
                 ...state,
-                tareasproyecto: state.tareasproyecto.filter(tarea => tarea.proyectoId ===
-                    action.payload)
+                tareasproyecto: action.payload //estos son los resultados ya filtrados por la api
             }
         case AGREGAR_TAREA:
             return {
